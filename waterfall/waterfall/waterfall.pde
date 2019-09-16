@@ -1,7 +1,7 @@
 int xLen = 0;
 int xGrow = 3;
 int goodToGo = 0;
-int ceilingYes = 0;
+int ceilingYes = 2;
 
 int xPos = 0;
 int xShrink = 0;
@@ -44,6 +44,7 @@ void drawCeilingWater(){
   //goodToGo = 0;
   yShrink = 3;
   yGrow = -3;
+  ceilingYes = 1;
  }
    
  if (yLen <= 0 && yPos > 0)
@@ -62,8 +63,6 @@ void drawCeilingWater(){
 }
 
 void drawWaterFall(){
-  
-  
   
   
 }
@@ -93,6 +92,7 @@ void drawPipeline()
    xLen = 0;
    xPos = 0;
    goodToGo = 1;
+   //ceilingYes = ;
  }
  
  if (goodToGo == 1 && (second() % 7 == 3 && ceilingYes == 0)) //modulo gets us a more "random" time
@@ -100,6 +100,7 @@ void drawPipeline()
    //xLen = 0;
    xGrow = 3;
    fill(0, 0, random(102, 255));
+   ceilingYes = 0;
  }
  
     //xPos = xPos + xShrink;
@@ -115,5 +116,6 @@ void draw(){
   if (ceilingYes == 1)
   {
     drawCeilingWater();
+    //ceilingYes = 0;
   }
 }
