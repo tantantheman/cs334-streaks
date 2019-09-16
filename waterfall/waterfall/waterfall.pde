@@ -11,8 +11,7 @@ float totalTime;
 void setup() {
   // setup processing interface
   fullScreen();
-  stroke(255);
-  
+  noStroke();  
  // savedTime = millis();
 
 }
@@ -47,6 +46,7 @@ void draw(){
  {
    //xLen = 0;
    xGrow = 3;
+   fill(0, 0, random(102, 255));
  }
  
     //xPos = xPos + xShrink;
