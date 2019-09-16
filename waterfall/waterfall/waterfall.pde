@@ -43,7 +43,7 @@ void draw(){
    goodToGo = 1;
  }
  
- if (goodToGo == 1)
+ if (goodToGo == 1 && (second() % 7 == 3)) //modulo gets us a more "random" time
  {
    //xLen = 0;
    xGrow = 3;
