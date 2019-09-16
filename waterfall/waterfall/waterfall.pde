@@ -1,56 +1,57 @@
-int xLen = 1;
+int xLen = 0;
 int xGrow = 3;
+int goodToGo = 0;
 
 int xPos = 0;
 int xShrink = 0;
 
 int savedTime;
-int totalTime = 5000;
+float totalTime;
 
 void setup() {
   // setup processing interface
   fullScreen();
-  //stroke(255);
+  stroke(255);
   
-  savedTime = millis();
+ // savedTime = millis();
 
 }
 
 void draw(){
   background(204);
-  int passedTime = millis() - savedTime;
-  if (passedTime > totalTime)
-  {
-    
-  }
-  rect(xPos, 800, xLen, 107);
+ // totalTime = random(10000, 20000);
+
   
+  rect(xPos, 800, xLen, 107);
+ 
   //xLen = 1;
   //xGrow = 1;
  
  if (xLen >= 1130)
  {
-  //xLen = xLen + xGrow;
-  //xPos = xPos + xShrink;
+  goodToGo = 0;
   xShrink = 3;
   xGrow = -3;
  }
- 
-
    
  if (xLen <= 0 && xPos > 0)
  {
    xGrow = 0;
    xShrink = 0;
    xLen = 0;
+   xPos = 0;
+   goodToGo = 1;
+ }
+ 
+ if (goodToGo == 1)
+ {
+   //xLen = 0;
+   xGrow = 3;
  }
  
     //xPos = xPos + xShrink;
    xLen = xLen + xGrow;
    xPos = xPos + xShrink;
- 
- 
-  
 }
 
 void pipeline()
