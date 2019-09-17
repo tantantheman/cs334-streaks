@@ -7,6 +7,10 @@ int newxPos;
 int xPos = 0;
 int xShrink = 0;
 
+int globalColorR = int(random(0, 255));
+int globalColorG = int(random(0, 255));
+int globalColorB = int(random(0, 255));
+
 int yLen = 107;
 int yGrow = 3;
 int yPos = 800;
@@ -29,17 +33,29 @@ void setup() {
 void draw(){
   background(0);
   drawPipeline(); 
+  for (ParticleSystem ps : systems) {
+    ps.run();
+    ps.addParticle();
+    }
 }
 
+void colorChange(){
+  
+  globalColorR = int(random(0, 255));
+  globalColorG = int(random(0, 255));
+  globalColorB = int(random(0, 255));
+  
+}
 void drawPipeline()
 {
  rect(xPos, yPos, xLen, yLen);
 
  if (goodToGo == 2 && (second() % 7 == 3 && ceilingTime == 0)) //modulo gets us a more "random" time
  {
+   colorChange();
    goodToGo = 1;
    xGrow = 3;
-   fill(0, 0, random(102, 255));
+   fill(globalColorR, globalColorG, globalColorB);
  }
   
   if (goodToGo == 1 && xLen >= 1130)
@@ -82,20 +98,25 @@ void drawPipeline()
    ceilingTime = 0;
    uhOh = 1; //kill the particles
    systems.remove(0);
+   count = 0;
    goodToGo = 2; //time for the actual waterfall!
  }
  
  if (goodToGo == 3) //implementation of the particles for waterfall
  {
-     systems.add(new ParticleSystem(1, new PVector(newxPos + (newxLen/2) , 539)));
+   println("count is " + count);
+   if (count == 0)
+   {
+   systems.add(new ParticleSystem(1, new PVector((newxPos + (newxLen/2)) , 539)));
+   count = count + 1;
+   }
+ //  count = count + 1;
  
-   for (ParticleSystem ps : systems) {
-    ps.run();
-    ps.addParticle();
+ 
 
   }
    
- }
+ 
  
  
   if (goodToGo == 1)   //xPos = xPos + xShrink;
@@ -190,7 +211,7 @@ class Particle {
 
   Particle(PVector l) {
     //acceleration = new PVector(0, 0.05);
-    acceleration = new PVector(0, 0.2);
+    acceleration = new PVector(0, 0.4);
     velocity = new PVector(random(-1, 1), random(-2, 0));
     position = l.copy();
     lifespan = 150.0;
@@ -211,7 +232,7 @@ class Particle {
   // Method to display
   void display() {
     //stroke(255, lifespan);
-    fill(255, lifespan);
+    fill(globalColorR, globalColorG, globalColorB);
     ellipse(position.x, position.y, 8, 8);
   }
 
