@@ -31,7 +31,7 @@ void setup() {
 }
 
 void draw(){
-  background(0);
+  background(255);
   drawPipeline(); 
   for (ParticleSystem ps : systems) {
     ps.run();
@@ -113,13 +113,8 @@ void drawPipeline()
    systems.add(new ParticleSystem(1, new PVector((newxPos + 3 + ((newxLen/5) * count)) , 539)));
    count = count + 1;
    }
- 
- 
 
   }
-   
- 
- 
  
   if (goodToGo == 1)   //xPos = xPos + xShrink;
  {  
@@ -136,14 +131,13 @@ void drawPipeline()
 
 void streamGenerator()
 {
-  newxLen = int(((random(20, 100))/2)*2);
+  newxLen = int(((random(40, 100))/2)*2);
   //newxPos = int(random(1259, 1600-newxLen));
   //this is not random for now just to confirm randomized widths, and we can see it before we configure
   newxPos = 1259;
   println(newxLen);
   println(newxPos);
 }
-
 
 class ParticleSystem {
 
