@@ -11,10 +11,12 @@ int globalColorR = int(random(0, 255));
 int globalColorG = int(random(0, 255));
 int globalColorB = int(random(0, 255));
 
-int yLen = 107;
+int yLen = 200;
 int yGrow = 3;
 int yPos = 800;
 int yShrink = 0;
+
+int yHalf = 644;
 
 //for particles!
 int count = 0;
@@ -31,7 +33,7 @@ void setup() {
 }
 
 void draw(){
-  background(255);
+  background(0);
   drawPipeline(); 
   for (ParticleSystem ps : systems) {
     ps.run();
@@ -79,7 +81,7 @@ void drawPipeline()
    ceilingTime = 1;  
  }
  
- if (yLen >= 539 && ceilingTime == 1)
+ if (yLen >= yHalf && ceilingTime == 1)
  {
   yShrink = 3;
   yGrow = -3;
@@ -90,7 +92,7 @@ void drawPipeline()
  {
    yGrow = 3;
    yShrink = 0;
-   yLen = 107;
+   yLen = 200;
    yPos = 800;
    xPos = 0;
    xLen = 0;
@@ -110,7 +112,7 @@ void drawPipeline()
    //println("count is " + count);
    if (count < 5)
    {
-   systems.add(new ParticleSystem(1, new PVector((newxPos + 3 + ((newxLen/5) * count)) , 539)));
+   systems.add(new ParticleSystem(1, new PVector((newxPos + 3 + ((newxLen/5) * count)) , yHalf)));
    count = count + 1;
    }
 
@@ -132,9 +134,9 @@ void drawPipeline()
 void streamGenerator()
 {
   newxLen = int(((random(40, 100))/2)*2);
-  //newxPos = int(random(1259, 1600-newxLen));
+  newxPos = int(random(1259, 1920-newxLen));
   //this is not random for now just to confirm randomized widths, and we can see it before we configure
-  newxPos = 1259;
+  //newxPos = 1259;
   println(newxLen);
   println(newxPos);
 }
