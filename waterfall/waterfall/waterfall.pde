@@ -76,12 +76,16 @@ void drawPipeline()
 
  if (goodToGo == 2 && (second() % 7 == 3 && ceilingTime == 0)) //modulo gets us a more "random" time
  {
+  colorChange();
+
+   println("activated");
    uhOh = 0;
-  // yLen = 200;
-   colorChange();
+   xPos = 0;
+   xLen = 0;
+   yPos = 800;
+   yLen = 200;
    goodToGo = 1;
    xGrow = 3;
-   //fill(globalColorR, globalColorG, globalColorB);
  }
   
   if (goodToGo == 1 && xLen >= 1130)
@@ -103,6 +107,7 @@ void drawPipeline()
    yShrink = 0;
    goodToGo = 0;
    ceilingTime = 1;  
+   uhOh = 0;
  }
  
  if (yLen >= yHalf && ceilingTime == 1)
@@ -114,18 +119,12 @@ void drawPipeline()
 
  if (ceilingTime == 1 && (yLen <= 0 && yPos > 0) && secondyPos >= 1200) //when the ceiling water finishes
  {
-   
-
-   
-   //secondyGrow = 3;
    yGrow = 0;
    yShrink = 0;
-
    xShrink = 0;
+   secondyGrow = 0;
    ceilingTime = 0;
-   removeParticles();
    goodToGo = 2; //time for the actual waterfall!
-   
    
  }
 
@@ -147,18 +146,20 @@ void drawPipeline()
      uhOh = 1;
      secondyGrow = 3;
    }
-   else if (secondyGrow < 0 && secondyPos <= yHalf)
+   
+ /*  else if (secondyGrow < 0 && secondyPos <= yHalf)
    {
      secondyGrow = 0;
-   }
+   } */
    else if (secondyGrow == 0 && secondyPos > yHalf)
    {
      secondyGrow = -3;
    }
+   /*
    else if (secondyGrow == 3 && secondyPos >= 1200)
    {
      secondyGrow = 0;
-   }
+   } */
 
   }
 
