@@ -1,7 +1,7 @@
 int xLen = 0;
 int xGrow = 3;
-int goodToGo = 0;
-int ceilingTime = 0;
+int goodToGo = 1;
+int ceilingTime = 2;
 
 int xPos = 0;
 int xShrink = 0;
@@ -34,48 +34,44 @@ void setup() {
 
 }
 
-
-
 void drawPipeline()
 {
  rect(xPos, yPos, xLen, yLen);
  
-  //xLen = 1;
-  //xGrow = 1;
- 
  if (xLen >= 1130)
  {
-  goodToGo = 0;
   xShrink = 3;
   xGrow = -3;
-  println("ceiling yes  = 1 this time around");
  }
    
  if (xLen <= 0 && xPos > 0)
  {
    xGrow = 0;
    xShrink = 0;
-   //xLen = 0;
    xPos = 1259;
    yPos = 0;
    xLen = 600;
    yLen = 0;
-   
-   ceilingTime = 1;
-   
-   
+   goodToGo = 0;
+   ceilingTime = 1;  
  }
+ 
  if (yLen >= 1078 && ceilingTime == 1)
  {
   yShrink = 3;
   yGrow = -3;
  } 
+ 
  else if (ceilingTime == 1 && (yLen <= 0 && yPos > 0))
  {
    yGrow = 0;
    yShrink = 0;
    yLen = 0;
    yPos = 0;
+   xPos = 0;
+   ceilingTime = 0;
+   goodToGo = 1;
+   println("reached");
  }
  
  if (ceilingTime == 1)
@@ -85,17 +81,18 @@ void drawPipeline()
  }
  
 
- 
  if (goodToGo == 1 && (second() % 7 == 3 && ceilingTime == 0)) //modulo gets us a more "random" time
  {
-   //xLen = 0;
+   xLen = 0;
    xGrow = 3;
    fill(0, 0, random(102, 255));
  }
  
-    //xPos = xPos + xShrink;
+ if (goodToGo == 1)   //xPos = xPos + xShrink;
+ {  
    xLen = xLen + xGrow;
    xPos = xPos + xShrink;
+ }
 }
 
 
