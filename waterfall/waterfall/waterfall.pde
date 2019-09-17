@@ -25,7 +25,7 @@ void setup() {
   // setup processing interface
   fullScreen();
   noStroke();  
-  frameRate(20);
+  //frameRate(20);
   systems = new ArrayList<ParticleSystem>();
 
 }
@@ -97,20 +97,22 @@ void drawPipeline()
    xShrink = 0;
    ceilingTime = 0;
    uhOh = 1; //kill the particles
+   for (int x = 0; x < 5; x++)
+   {
    systems.remove(0);
+   }
    count = 0;
    goodToGo = 2; //time for the actual waterfall!
  }
  
  if (goodToGo == 3) //implementation of the particles for waterfall
  {
-   println("count is " + count);
-   if (count == 0)
+   //println("count is " + count);
+   if (count < 5)
    {
-   systems.add(new ParticleSystem(1, new PVector((newxPos + (newxLen/2)) , 539)));
+   systems.add(new ParticleSystem(1, new PVector((newxPos + 3 + ((newxLen/5) * count)) , 539)));
    count = count + 1;
    }
- //  count = count + 1;
  
  
 
