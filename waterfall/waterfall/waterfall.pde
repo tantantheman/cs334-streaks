@@ -28,6 +28,7 @@ int yHalf = 643;
 //for particles!
 int count = 0;
 int uhOh = 0;
+int removeParticles = 0;
 ArrayList<ParticleSystem> systems;
 
 void setup() {
@@ -42,10 +43,22 @@ void setup() {
 void draw(){
   background(0);
   drawPipeline(); 
-  for (ParticleSystem ps : systems) {
+ /* for (ParticleSystem ps : systems) {
     ps.run();
     ps.addParticle();
+    } */
+    
+   for (int i = systems.size()-1; i >= 0; i--) {
+    ParticleSystem ps = (ParticleSystem) systems.get(i);
+    ps.run();
+    ps.addParticle();
+
+    if (uhOh == 1) {
+      systems.remove(i);
     }
+
+  }
+
 }
 
 void colorChange(){
@@ -57,16 +70,18 @@ void colorChange(){
 }
 void drawPipeline()
 {
+ fill (globalColorR, globalColorG, globalColorB);
  rect(xPos, yPos, xLen, yLen);
  rect(secondxPos, secondyPos, secondxLen, secondxPos);
 
  if (goodToGo == 2 && (second() % 7 == 3 && ceilingTime == 0)) //modulo gets us a more "random" time
  {
-   //secondyShrink = -3;
+   uhOh = 0;
+  // yLen = 200;
    colorChange();
    goodToGo = 1;
    xGrow = 3;
-   fill(globalColorR, globalColorG, globalColorB);
+   //fill(globalColorR, globalColorG, globalColorB);
  }
   
   if (goodToGo == 1 && xLen >= 1130)
@@ -99,28 +114,24 @@ void drawPipeline()
 
  if (ceilingTime == 1 && (yLen <= 0 && yPos > 0) && secondyPos >= 1200) //when the ceiling water finishes
  {
-   yGrow = 3;
+   
+
+   
+   //secondyGrow = 3;
+   yGrow = 0;
    yShrink = 0;
-   yLen = 200;
-   yPos = 800;
-   xPos = 0;
-   xLen = 0;
+
    xShrink = 0;
    ceilingTime = 0;
- //  uhOh = 1; //kill the particles
- /*  for (int x = 0; x < 5; x++)
-   {
-     systems.remove(0);
-   } */
-   count = 0;
+   removeParticles();
    goodToGo = 2; //time for the actual waterfall!
+   
+   
  }
 
  if (goodToGo == 3) //implementation of the particles for waterfall
  {
-   int shrinking = 0;
-   //int finished = 0; 
-   //println("count is " + count);
+   
    if (count < 5)
    {
    systems.add(new ParticleSystem(1, new PVector((newxPos + 3 + ((newxLen/5) * count)) , yHalf)));
@@ -129,12 +140,11 @@ void drawPipeline()
    
    if (secondyGrow == -3 && secondyPos <= yHalf)
    {
-    for (int x = 0; x < 5; x++)
-   {
-     systems.remove(0);
-   }
-   count = 0;
-     //uhOh = 1;
+     yLen = 0;
+     yPos = 800;
+     xPos = 0;
+     xLen = 0;
+     uhOh = 1;
      secondyGrow = 3;
    }
    else if (secondyGrow < 0 && secondyPos <= yHalf)
@@ -151,6 +161,7 @@ void drawPipeline()
    }
 
   }
+
  
   if (goodToGo == 1)   //xPos = xPos + xShrink;
  {  
@@ -167,19 +178,20 @@ void drawPipeline()
    yPos = yPos + yShrink;
  }
  
-
    secondyPos = secondyPos + secondyGrow;
-   
 }
 
 void streamGenerator()
 {
   newxLen = int(((random(40, 100))/2)*2);
   newxPos = int(random(1259, 1920-newxLen));
-  //this is not random for now just to confirm randomized widths, and we can see it before we configure
-  //newxPos = 1259;
-  println(newxLen);
-  println(newxPos);
+}
+
+
+void removeParticles()
+{
+
+   //println(systems);
 }
 
 class ParticleSystem {
@@ -212,15 +224,8 @@ class ParticleSystem {
       Particle p = particles.get(i);
       p.lifespan = 0;
     }
+  }
 
-  }
-  
-  void bringBack(){
-    for (int i = particles.size()-1; i >= 0; i--) {
-      Particle p = particles.get(i);
-      p.lifespan = 150;
-    }
-  }
 
   void addParticle() {
     Particle p;
