@@ -12,19 +12,6 @@ int yGrow = 3;
 int yPos = 800;
 int yShrink = 0;
 
-
-float beginX = 20.0;  // Initial x-coordinate
-float beginY = 10.0;  // Initial y-coordinate
-float endX = 570.0;   // Final x-coordinate
-float endY = 320.0;   // Final y-coordinate
-float distX;          // X-axis distance to move
-float distY;          // Y-axis distance to move
-float exponent = 4;   // Determines the curve
-float x = 0.0;        // Current x-coordinate
-float y = 0.0;        // Current y-coordinate
-float step = 0.01;    // Size of each step along the path
-float pct = 0.0;      // Percentage traveled (0.0 to 1.0)
-
 void setup() {
   // setup processing interface
   fullScreen();
@@ -38,7 +25,6 @@ void drawPipeline()
 
  if (goodToGo == 2 && (second() % 7 == 3 && ceilingTime == 0)) //modulo gets us a more "random" time
  {
-   //xLen = 0;
    goodToGo = 1;
    xGrow = 3;
    fill(0, 0, random(102, 255));
@@ -57,10 +43,8 @@ void drawPipeline()
    streamGenerator();
    xGrow = 0;
    xShrink = 0;
-   //xPos = 1259;
    xPos = newxPos;
    yPos = 0;
-   //xLen = 600;
    xLen = newxLen;
    yLen = 0;
    yGrow = 3;
@@ -108,7 +92,9 @@ void drawPipeline()
 void streamGenerator()
 {
   newxLen = int(random(20, 100));
-  newxPos = int(random(1259, 1600-newxLen));
+  //newxPos = int(random(1259, 1600-newxLen));
+  //this is not random for now just to confirm randomized widths, and we can see it before we configure
+  newxPos = 1259;
   println(newxLen);
   println(newxPos);
 }
@@ -116,7 +102,5 @@ void streamGenerator()
 
 void draw(){
   background(204);
-  drawPipeline();
-
-  
+  drawPipeline(); 
 }
