@@ -2,7 +2,8 @@ int xLen = 0;
 int xGrow = 3;
 int goodToGo = 1;
 int ceilingTime = 2;
-
+int newxLen;
+int newxPos;
 int xPos = 0;
 int xShrink = 0;
 
@@ -11,8 +12,6 @@ int yGrow = 3;
 int yPos = 800;
 int yShrink = 0;
 
-int savedTime;
-float totalTime;
 
 float beginX = 20.0;  // Initial x-coordinate
 float beginY = 10.0;  // Initial y-coordinate
@@ -30,7 +29,6 @@ void setup() {
   // setup processing interface
   fullScreen();
   noStroke();  
- // savedTime = millis();
 
 }
 
@@ -56,11 +54,14 @@ void drawPipeline()
    
  if (goodToGo == 1 && xLen <= 0 && xPos > 0)
  {
+   streamGenerator();
    xGrow = 0;
    xShrink = 0;
-   xPos = 1259;
+   //xPos = 1259;
+   xPos = newxPos;
    yPos = 0;
-   xLen = 600;
+   //xLen = 600;
+   xLen = newxLen;
    yLen = 0;
    yGrow = 3;
    yShrink = 0;
@@ -104,9 +105,17 @@ void drawPipeline()
  
 }
 
+void streamGenerator()
+{
+  newxLen = int(random(20, 100));
+  newxPos = int(random(1259, 1600-newxLen));
+  println(newxLen);
+  println(newxPos);
+}
+
+
 void draw(){
   background(204);
- // totalTime = random(10000, 20000);
   drawPipeline();
 
   
