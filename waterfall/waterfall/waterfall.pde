@@ -21,6 +21,7 @@ void setup() {
   // setup processing interface
   fullScreen();
   noStroke();  
+  frameRate(20);
   systems = new ArrayList<ParticleSystem>();
 
 }
@@ -80,30 +81,20 @@ void drawPipeline()
    xShrink = 0;
    ceilingTime = 0;
    uhOh = 1; //kill the particles
+   systems.remove(0);
    goodToGo = 2; //time for the actual waterfall!
  }
  
  if (goodToGo == 3) //implementation of the particles for waterfall
  {
-   int xEnd = newxPos + newxLen;
-   
-   for (int x = 0; x < 10; x++)
-   {
-     systems.add(new ParticleSystem(1, new PVector(14 , 539)));
-     }
-
-   }
+     systems.add(new ParticleSystem(1, new PVector(newxPos + (newxLen/2) , 539)));
+ 
    for (ParticleSystem ps : systems) {
     ps.run();
     ps.addParticle();
-    if (uhOh == 1)
-  {
-    ps.killOff();
-  }
+
   }
    
-    //systems.add(new ParticleSystem(1, new PVector(xLen, 539)));
-
  }
  
  
@@ -159,11 +150,17 @@ class ParticleSystem {
   void killOff() {
     for (int i = particles.size()-1; i >= 0; i--) {
       Particle p = particles.get(i);
-      p.lifespan = p.lifespan - 40;
+      p.lifespan = 0;
     }
 
   }
-    
+  
+  void bringBack(){
+    for (int i = particles.size()-1; i >= 0; i--) {
+      Particle p = particles.get(i);
+      p.lifespan = 150;
+    }
+  }
 
   void addParticle() {
     Particle p;
@@ -196,7 +193,7 @@ class Particle {
     acceleration = new PVector(0, 0.2);
     velocity = new PVector(random(-1, 1), random(-2, 0));
     position = l.copy();
-    lifespan = 255.0;
+    lifespan = 150.0;
   }
 
   void run() {
@@ -213,7 +210,7 @@ class Particle {
 
   // Method to display
   void display() {
-    stroke(255, lifespan);
+    //stroke(255, lifespan);
     fill(255, lifespan);
     ellipse(position.x, position.y, 8, 8);
   }
