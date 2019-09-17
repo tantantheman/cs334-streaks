@@ -43,11 +43,7 @@ void setup() {
 void draw(){
   background(0);
   drawPipeline(); 
- /* for (ParticleSystem ps : systems) {
-    ps.run();
-    ps.addParticle();
-    } */
-    
+
    for (int i = systems.size()-1; i >= 0; i--) {
     ParticleSystem ps = (ParticleSystem) systems.get(i);
     ps.run();
@@ -56,9 +52,7 @@ void draw(){
     if (uhOh == 1) {
       systems.remove(i);
     }
-
   }
-
 }
 
 void colorChange(){
@@ -76,9 +70,9 @@ void drawPipeline()
 
  if (goodToGo == 2 && (second() % 7 == 3 && ceilingTime == 0)) //modulo gets us a more "random" time
  {
-  colorChange();
+   
+   colorChange();
 
-   println("activated");
    uhOh = 0;
    xPos = 0;
    xLen = 0;
@@ -86,6 +80,11 @@ void drawPipeline()
    yLen = 200;
    goodToGo = 1;
    xGrow = 3;
+   count = 0;
+   secondxPos = 1259;
+   secondxLen = 661;
+   secondyPos = 1286;
+   secondyLen = 1080;
  }
   
   if (goodToGo == 1 && xLen >= 1130)
