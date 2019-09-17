@@ -70,7 +70,7 @@ void drawPipeline()
  
 
  
- if (yLen >= 1078 && ceilingTime == 1)
+ if (yLen >= 539 && ceilingTime == 1)
  {
   yShrink = 3;
   yGrow = -3;
@@ -102,9 +102,7 @@ void drawPipeline()
    yPos = yPos + yShrink;
  }
  
- 
 }
-
 
 void draw(){
   background(204);
