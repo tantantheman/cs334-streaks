@@ -11,7 +11,7 @@ int secondxPos = 1259;
 int secondxLen = 661;
 int secondyPos = 1286;
 int secondyLen = 1080;
-int secondyGrow = 3;
+int secondyGrow = 0;
 int startFade = 0;
 
 int globalColorR = int(random(0, 255));
@@ -73,11 +73,6 @@ void drawPipeline()
  {
     xShrink = 3;
     xGrow = -3;
-    if (secondyPos <= 1200)
-   {
-     println("changing");
-    secondyPos = secondyPos + secondyGrow;
-   }
  }
    
  if (goodToGo == 1 && xLen <= 0 && xPos > 0)
@@ -100,9 +95,9 @@ void drawPipeline()
   yShrink = 3;
   yGrow = -3;
   goodToGo = 3;
-  } 
+ } 
 
- if (ceilingTime == 1 && (yLen <= 0 && yPos > 0)) //when the ceiling water finishes
+ if (ceilingTime == 1 && (yLen <= 0 && yPos > 0) && secondyPos >= 1200) //when the ceiling water finishes
  {
    yGrow = 3;
    yShrink = 0;
@@ -112,27 +107,49 @@ void drawPipeline()
    xLen = 0;
    xShrink = 0;
    ceilingTime = 0;
-   uhOh = 1; //kill the particles
-   for (int x = 0; x < 5; x++)
+ //  uhOh = 1; //kill the particles
+ /*  for (int x = 0; x < 5; x++)
    {
-   systems.remove(0);
-   }
+     systems.remove(0);
+   } */
    count = 0;
    goodToGo = 2; //time for the actual waterfall!
  }
 
  if (goodToGo == 3) //implementation of the particles for waterfall
  {
+   int shrinking = 0;
+   //int finished = 0; 
    //println("count is " + count);
    if (count < 5)
    {
    systems.add(new ParticleSystem(1, new PVector((newxPos + 3 + ((newxLen/5) * count)) , yHalf)));
    count = count + 1;
    }
-   if (secondyPos > yHalf)
+   
+   if (secondyGrow == -3 && secondyPos <= yHalf)
    {
-     secondyPos = secondyPos - secondyGrow;
+    for (int x = 0; x < 5; x++)
+   {
+     systems.remove(0);
    }
+   count = 0;
+     //uhOh = 1;
+     secondyGrow = 3;
+   }
+   else if (secondyGrow < 0 && secondyPos <= yHalf)
+   {
+     secondyGrow = 0;
+   }
+   else if (secondyGrow == 0 && secondyPos > yHalf)
+   {
+     secondyGrow = -3;
+   }
+   else if (secondyGrow == 3 && secondyPos >= 1200)
+   {
+     secondyGrow = 0;
+   }
+
   }
  
   if (goodToGo == 1)   //xPos = xPos + xShrink;
@@ -149,6 +166,10 @@ void drawPipeline()
    yLen = yLen + yGrow;
    yPos = yPos + yShrink;
  }
+ 
+
+   secondyPos = secondyPos + secondyGrow;
+   
 }
 
 void streamGenerator()
