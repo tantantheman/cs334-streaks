@@ -1,14 +1,14 @@
 int xLen = 0;
 int xGrow = 3;
 int goodToGo = 0;
-int ceilingYes = 2;
+int ceilingTime = 0;
 
 int xPos = 0;
 int xShrink = 0;
 
-int yLen = 0;
+int yLen = 107;
 int yGrow = 3;
-int yPos = 0;
+int yPos = 800;
 int yShrink = 0;
 
 int savedTime;
@@ -35,43 +35,10 @@ void setup() {
 }
 
 
-void drawCeilingWater(){
- //fill(0, 0, random(102, 255));
- rect(1259, yPos, 660, yLen);
- 
- if (yLen >= 1078)
- {
-  //goodToGo = 0;
-  yShrink = 3;
-  yGrow = -3;
-  ceilingYes = 1;
- }
-   
- if (yLen <= 0 && yPos > 0)
- {
-   yGrow = 0;
-   yShrink = 0;
-   yLen = 0;
-   yPos = 0;
-  //goodToGo = 1;
-   ceilingYes = 0;
- }
- 
-   yLen = yLen + yGrow;
-   yPos = yPos + yShrink;
- //call drawWaterFall here with arg of pixel position for the particle system to work
-}
-
-void drawWaterFall(){
-  
-  
-}
-
-
 
 void drawPipeline()
 {
- rect(xPos, 800, xLen, 107);
+ rect(xPos, yPos, xLen, yLen);
  
   //xLen = 1;
   //xGrow = 1;
@@ -81,26 +48,49 @@ void drawPipeline()
   goodToGo = 0;
   xShrink = 3;
   xGrow = -3;
-  ceilingYes = 1;
-  //drawCeilingWater();
+  println("ceiling yes  = 1 this time around");
  }
    
  if (xLen <= 0 && xPos > 0)
  {
    xGrow = 0;
    xShrink = 0;
-   xLen = 0;
-   xPos = 0;
-   goodToGo = 1;
-   //ceilingYes = ;
+   //xLen = 0;
+   xPos = 1259;
+   yPos = 0;
+   xLen = 600;
+   yLen = 0;
+   
+   ceilingTime = 1;
+   
+   
+ }
+ if (yLen >= 1078 && ceilingTime == 1)
+ {
+  yShrink = 3;
+  yGrow = -3;
+ } 
+ else if (ceilingTime == 1 && (yLen <= 0 && yPos > 0))
+ {
+   yGrow = 0;
+   yShrink = 0;
+   yLen = 0;
+   yPos = 0;
  }
  
- if (goodToGo == 1 && (second() % 7 == 3 && ceilingYes == 0)) //modulo gets us a more "random" time
+ if (ceilingTime == 1)
+ {
+   yLen = yLen + yGrow;
+   yPos = yPos + yShrink;
+ }
+ 
+
+ 
+ if (goodToGo == 1 && (second() % 7 == 3 && ceilingTime == 0)) //modulo gets us a more "random" time
  {
    //xLen = 0;
    xGrow = 3;
    fill(0, 0, random(102, 255));
-   ceilingYes = 0;
  }
  
     //xPos = xPos + xShrink;
@@ -113,9 +103,8 @@ void draw(){
   background(204);
  // totalTime = random(10000, 20000);
   drawPipeline();
-  if (ceilingYes == 1)
-  {
-    drawCeilingWater();
+
+ //  drawCeilingWater();
     //ceilingYes = 0;
-  }
+  
 }
