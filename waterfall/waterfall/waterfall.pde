@@ -7,6 +7,13 @@ int newxPos;
 int xPos = 0;
 int xShrink = 0;
 
+int secondxPos = 1259;
+int secondxLen = 661;
+int secondyPos = 1286;
+int secondyLen = 1080;
+int secondyGrow = 3;
+int startFade = 0;
+
 int globalColorR = int(random(0, 255));
 int globalColorG = int(random(0, 255));
 int globalColorB = int(random(0, 255));
@@ -16,7 +23,7 @@ int yGrow = 3;
 int yPos = 800;
 int yShrink = 0;
 
-int yHalf = 644;
+int yHalf = 643;
 
 //for particles!
 int count = 0;
@@ -51,9 +58,11 @@ void colorChange(){
 void drawPipeline()
 {
  rect(xPos, yPos, xLen, yLen);
+ rect(secondxPos, secondyPos, secondxLen, secondxPos);
 
  if (goodToGo == 2 && (second() % 7 == 3 && ceilingTime == 0)) //modulo gets us a more "random" time
  {
+   //secondyShrink = -3;
    colorChange();
    goodToGo = 1;
    xGrow = 3;
@@ -64,6 +73,11 @@ void drawPipeline()
  {
     xShrink = 3;
     xGrow = -3;
+    if (secondyPos <= 1200)
+   {
+     println("changing");
+    secondyPos = secondyPos + secondyGrow;
+   }
  }
    
  if (goodToGo == 1 && xLen <= 0 && xPos > 0)
@@ -86,8 +100,8 @@ void drawPipeline()
   yShrink = 3;
   yGrow = -3;
   goodToGo = 3;
- } 
- 
+  } 
+
  if (ceilingTime == 1 && (yLen <= 0 && yPos > 0)) //when the ceiling water finishes
  {
    yGrow = 3;
@@ -106,7 +120,7 @@ void drawPipeline()
    count = 0;
    goodToGo = 2; //time for the actual waterfall!
  }
- 
+
  if (goodToGo == 3) //implementation of the particles for waterfall
  {
    //println("count is " + count);
@@ -115,17 +129,23 @@ void drawPipeline()
    systems.add(new ParticleSystem(1, new PVector((newxPos + 3 + ((newxLen/5) * count)) , yHalf)));
    count = count + 1;
    }
-
+   if (secondyPos > yHalf)
+   {
+     secondyPos = secondyPos - secondyGrow;
+   }
   }
  
   if (goodToGo == 1)   //xPos = xPos + xShrink;
  {  
+ 
    xLen = xLen + xGrow;
    xPos = xPos + xShrink;
+   
  }
  
  if (ceilingTime == 1)
  {
+
    yLen = yLen + yGrow;
    yPos = yPos + yShrink;
  }
